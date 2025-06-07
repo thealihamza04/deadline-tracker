@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { DeadlineForm } from "@/components/DeadlineForm";
 import { DeadlineList } from "@/components/DeadlineList";
@@ -9,64 +8,101 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
-export interface Deadline {
-  id: string;
-  title: string;
-  subject: string;
-  type: "assignment" | "quiz";
-  dueDate: Date;
-  priority: "high" | "medium" | "low";
-  completed: boolean;
-  description?: string;
-}
+// Define the expected structure of a Deadline object using comments for JSX:
+// {
+//   id: string,
+//   title: string,
+//   subject: string,
+//   type: "assignment" | "quiz",
+//   dueDate: Date, // Stored as ISO string in localStorage, converted to Date object here
+//   priority: "high" | "medium" | "low",
+//   completed: boolean,
+//   description?: string
+// }
 
 const Index = () => {
-  const [deadlines, setDeadlines] = useState<Deadline[]>([
-    {
-      id: "1",
-      title: "Math Quiz Chapter 5",
-      subject: "Mathematics",
-      type: "quiz",
-      dueDate: new Date(2025, 5, 10),
-      priority: "high",
-      completed: false,
-      description: "Covers algebra and trigonometry"
-    },
-    {
-      id: "2",
-      title: "History Essay",
-      subject: "History",
-      type: "assignment",
-      dueDate: new Date(2025, 5, 15),
-      priority: "medium",
-      completed: false,
-      description: "World War II analysis"
+  // Initialize deadlines state by attempting to load from localStorage.
+  // If no data is found or an error occurs, it starts with an empty array.
+  const [deadlines, setDeadlines] = useState(() => {
+    try {
+      const savedDeadlines = localStorage.getItem("appdata");
+      if (savedDeadlines) {
+        const parsedData = JSON.parse(savedDeadlines);
+        // Crucial: Convert dueDate strings back to Date objects, as localStorage stores strings.
+        const loadedDeadlines = parsedData.map((deadline) => ({
+          ...deadline,
+          dueDate: new Date(deadline.dueDate),
+        }));
+        console.log("Loaded deadlines from localStorage:", loadedDeadlines); // For debugging
+        return loadedDeadlines;
+      }
+    } catch (error) {
+      console.error("Failed to load deadlines from localStorage:", error);
+      // If loading fails, return an empty array to prevent app crash
     }
-  ]);
+    console.log("No saved 'appdata' found, starting with an empty list."); // For debugging
+    return []; // Return an empty array if no saved data or if an error occurred
+  });
   
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const addDeadline = (newDeadline: Omit<Deadline, "id">) => {
-    const deadline: Deadline = {
+  // useEffect hook to store and update data on localStorage
+  // This effect runs every time the 'deadlines' array state changes.
+  useEffect(() => {
+    console.log("Deadlines state changed, attempting to save to localStorage under 'appdata'."); // For debugging
+    try {
+      // Before saving, convert Date objects to ISO strings for proper storage.
+      const deadlinesToSave = deadlines.map(deadline => ({
+        ...deadline,
+        dueDate: deadline.dueDate.toISOString(),
+      }));
+      localStorage.setItem("appdata", JSON.stringify(deadlinesToSave));
+      console.log("Successfully saved deadlines to localStorage:", deadlinesToSave); // For debugging
+    } catch (error) {
+      console.error("Failed to save deadlines to localStorage:", error);
+    }
+  }, [deadlines]); // Dependency array: ensures effect runs only when 'deadlines' state changes
+
+  /**
+   * Adds a new deadline to the list.
+   * @param {object} newDeadline - The new deadline object (excluding id and completed status).
+   */
+  const addDeadline = (newDeadline) => {
+    const deadline = {
       ...newDeadline,
-      id: Date.now().toString(),
+      id: Date.now().toString(), // Generate a unique ID based on timestamp
+      completed: false, // New deadlines are always initially not completed
     };
-    setDeadlines([...deadlines, deadline]);
-    setIsFormOpen(false);
+    setDeadlines((prevDeadlines) => [...prevDeadlines, deadline]); // Use functional update
+    setIsFormOpen(false); // Close the form dialog after adding
   };
 
-  const updateDeadline = (id: string, updates: Partial<Deadline>) => {
-    setDeadlines(deadlines.map(deadline => 
-      deadline.id === id ? { ...deadline, ...updates } : deadline
-    ));
+  /**
+   * Updates an existing deadline.
+   * @param {string} id - The ID of the deadline to update.
+   * @param {object} updates - An object containing the properties to update.
+   */
+  const updateDeadline = (id, updates) => {
+    setDeadlines((prevDeadlines) => // Use functional update
+      prevDeadlines.map(deadline => 
+        deadline.id === id ? { ...deadline, ...updates } : deadline
+      )
+    );
   };
 
-  const deleteDeadline = (id: string) => {
-    setDeadlines(deadlines.filter(deadline => deadline.id !== id));
+  /**
+   * Deletes a deadline from the list.
+   * @param {string} id - The ID of the deadline to delete.
+   */
+  const deleteDeadline = (id) => {
+    setDeadlines((prevDeadlines) => // Use functional update
+      prevDeadlines.filter(deadline => deadline.id !== id)
+    );
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+      {/* The Header component (uncomment if you want to include it) */}
       {/* <Header /> */}
       
       <main className="container mx-auto px-4 py-8">
@@ -87,7 +123,11 @@ const Index = () => {
                 Add Deadline
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl">
+            <DialogContent
+              // UPDATED CLASSNAME FOR RESPONSIVENESS:
+              className="w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-lg md:max-w-xl lg:max-w-2xl"
+            >
+              {/* Ensure DeadlineForm is correctly implemented for JS/TSX */}
               <DeadlineForm onSubmit={addDeadline} />
             </DialogContent>
           </Dialog>
