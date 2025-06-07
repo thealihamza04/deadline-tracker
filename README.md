@@ -54,14 +54,6 @@ npm i
 npm run dev
 ```
 
-**Editing a File Directly in GitHub**
-
-You can navigate to the desired file(s) on GitHub, click the "Edit" button (pencil icon) at the top right of the file view, make your changes, and then commit them.
-
-**Using GitHub Codespaces**
-
-Navigate to the main page of this repository, click on the "Code" button (green button) near the top right, and select the "Codespaces" tab. Click on "New codespace" to launch a new Codespace environment. You can then edit files directly within the Codespace and commit and push your changes once done.
-
 ## Technologies Used for This Project
 
 This project is built with:

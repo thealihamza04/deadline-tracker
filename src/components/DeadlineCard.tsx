@@ -66,10 +66,10 @@ export const DeadlineCard = ({
 
   const getTypeIcon = () => {
     return deadline.type === "assignment" ? (
-      <BookOpen className='h-4 w-4' /> // No color change here
+      <BookOpen className='h-4 w-4' />
     ) : (
       <Brain className='h-4 w-4' />
-    ); // No color change here
+    );
   };
 
   const getDateBadge = () => {
@@ -81,7 +81,7 @@ export const DeadlineCard = ({
       );
     }
     if (isOverdue) {
-      return <Badge variant='destructive'>Overdue</Badge>; // Original destructive variant color
+      return <Badge variant='destructive'>Overdue</Badge>;
     }
     if (isDueToday) {
       return (
@@ -120,13 +120,18 @@ export const DeadlineCard = ({
 
   return (
     // Added 'group' class to Card for hover effects on child elements
+    // UPDATED CLASSNAME LOGIC FOR COMPLETED STATE:
     <Card
       className={cn(
-        "group transition-all duration-200 hover:shadow-md",
-        deadline.completed && "opacity-75",
-        isOverdue && "border-red-200 bg-red-50/30",
-        isDueToday && "border-orange-200 bg-orange-50/30",
-        "flex flex-col" // Ensure card itself is a flex container for its header and content
+        "group transition-all duration-200 ",
+        "flex flex-col", // Ensure card itself is a flex container for its header and content
+        deadline.completed // Prioritize completed styling if true
+          ? "bg-muted text-muted-foreground opacity-80 border-gray-300" // Muted background, text, slight border, slightly less opaque
+          : isOverdue // Otherwise, check for overdue
+          ? "border-red-200 bg-red-50/30"
+          : isDueToday // Otherwise, check for due today
+          ? "border-orange-200 bg-orange-50/30"
+          : "bg-white" // Default background
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -150,13 +155,18 @@ export const DeadlineCard = ({
               <h3
                 className={cn(
                   "font-semibold text-lg leading-tight", // Added leading-tight for tighter line spacing
-                  deadline.completed && "line-through text-muted-foreground"
+                  deadline.completed && "line-through" // text-muted-foreground is applied to Card, so just line-through here
                 )}
               >
                 {deadline.title}
               </h3>
             </div>
-            <p className='text-muted-foreground font-medium text-sm'>
+            <p
+              className={cn(
+                "font-medium text-sm",
+                deadline.completed && "line-through"
+              )}
+            >
               {deadline.subject}
             </p>
           </div>
@@ -222,7 +232,7 @@ export const DeadlineCard = ({
         </div>
 
         {deadline.description && (
-          <p className='text-sm text-muted-foreground mt-3 p-3 bg-muted/50 rounded-md'>
+          <p className='text-sm mt-3 p-3 bg-muted/50 rounded-md'>
             {deadline.description}
           </p>
         )}

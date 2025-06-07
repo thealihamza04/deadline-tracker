@@ -29,7 +29,7 @@ export const DeadlineList = ({
   );
   const [filterStatus, setFilterStatus] = useState<
     "all" | "pending" | "completed"
-  >("all");
+  >("pending");
   const [sortBy, setSortBy] = useState<"dueDate" | "priority" | "title">(
     "dueDate"
   );
