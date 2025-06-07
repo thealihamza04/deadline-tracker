@@ -1,24 +1,42 @@
-# Welcome to your Lovable project
+# Deadline Tracker Web App
 
-## Project info
+## Project Overview
 
-**URL**: https://lovable.dev/projects/d77da90c-7896-4b6c-a9f9-0ca9000887a3
+This web app is designed to be a fantastic productivity tool, helping students stay organized and on top of their academic deadlines for assignments and quizzes.
 
-## How can I edit this code?
+The vision for this app includes:
 
-There are several ways of editing your application.
+  * **Clean dashboard** showing upcoming deadlines at a glance.
+  * Ability to **add/edit assignments and quizzes** with due dates, subjects, and priority levels.
+  * A **visual calendar view** to see deadlines across time.
+  * **Progress tracking** to easily mark items as completed.
+  * **Smart filtering** by subject, deadline proximity, or completion status.
 
-**Use Lovable**
+For the design, the focus is on a modern, student-friendly interface featuring:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d77da90c-7896-4b6c-a9f9-0ca9000887a3) and start prompting.
+  * **Color-coded priority levels** (high/medium/low).
+  * **Intuitive card-based layout** for easy scanning.
+  * **Smooth animations** and hover effects for a better user experience.
+  * **Responsive design** that works seamlessly on all devices.
+  * **Clean typography** and plenty of whitespace for readability.
 
-Changes made via Lovable will be committed automatically to this repo.
+The chosen color scheme is vibrant yet professional, utilizing blues and greens for a calming yet productive feel, complemented by subtle gradients and shadows for depth.
 
-**Use your preferred IDE**
+## Project Information
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+**URL**: [https://lovable.dev/projects/d77da90c-7896-4b6c-a9f9-0ca90008789](https://www.google.com/search?q=https://lovable.dev/projects/d77da90c-7896-4b6c-a9f9-0ca90008789)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## How to Edit This Code
+
+There are several ways to edit this application:
+
+**Using Lovable**
+
+You can directly visit the [Lovable Project](https://www.google.com/search?q=https://lovable.dev/projects/d77da90c-7896-4b6c-a9f9-0ca90008789) and use prompting to make changes. Changes made via Lovable will be committed automatically to this repository.
+
+**Using Your Preferred IDE**
+
+If you prefer to work locally, you can clone this repository and push your changes. Pushed changes will be reflected in Lovable. The only requirement is having Node.js & npm installed (you can [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)).
 
 Follow these steps:
 
@@ -36,38 +54,30 @@ npm i
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+**Editing a File Directly in GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+You can navigate to the desired file(s) on GitHub, click the "Edit" button (pencil icon) at the top right of the file view, make your changes, and then commit them.
 
-**Use GitHub Codespaces**
+**Using GitHub Codespaces**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Navigate to the main page of this repository, click on the "Code" button (green button) near the top right, and select the "Codespaces" tab. Click on "New codespace" to launch a new Codespace environment. You can then edit files directly within the Codespace and commit and push your changes once done.
 
-## What technologies are used for this project?
+## Technologies Used for This Project
 
 This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+  * Vite
+  * TypeScript
+  * React
+  * shadcn-ui
+  * Tailwind CSS
 
-## How can I deploy this project?
+## How to Deploy This Project
 
-Simply open [Lovable](https://lovable.dev/projects/d77da90c-7896-4b6c-a9f9-0ca9000887a3) and click on Share -> Publish.
+Simply open [Lovable](https://www.google.com/search?q=https://lovable.dev/projects/d77da90c-7896-4b6c-a9f9-0ca90008789) and click on Share -\> Publish.
 
-## Can I connect a custom domain to my Lovable project?
+## Connecting a Custom Domain to This Lovable Project
 
-Yes, you can!
+Yes, it's possible\! To connect a domain, navigate to Project \> Settings \> Domains and click "Connect Domain."
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+You can read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
