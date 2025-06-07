@@ -44,36 +44,37 @@ export const CalendarView = ({ deadlines }: CalendarViewProps) => {
 
   return (
     <Card className="w-full">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center space-x-2">
-            <CalendarIcon className="h-5 w-5" />
+      <CardHeader className="pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <CardTitle className="flex items-center space-x-2 text-lg sm:text-xl">
+            <CalendarIcon className="h-4 w-4 sm:h-5 sm:w-5" />
             <span>Calendar View</span>
           </CardTitle>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm" onClick={() => navigateMonth("prev")}>
-              <ChevronLeft className="h-4 w-4" />
+          <div className="flex items-center justify-center sm:justify-end space-x-2">
+            <Button variant="outline" size="sm" onClick={() => navigateMonth("prev")} className="h-8 w-8 p-0 sm:h-9 sm:w-9">
+              <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
-            <span className="font-semibold min-w-[150px] text-center">
+            <span className="font-semibold text-sm sm:text-base min-w-[120px] sm:min-w-[150px] text-center">
               {format(currentDate, "MMMM yyyy")}
             </span>
-            <Button variant="outline" size="sm" onClick={() => navigateMonth("next")}>
-              <ChevronRight className="h-4 w-4" />
+            <Button variant="outline" size="sm" onClick={() => navigateMonth("next")} className="h-8 w-8 p-0 sm:h-9 sm:w-9">
+              <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
           </div>
         </div>
       </CardHeader>
       
-      <CardContent>
-        <div className="grid grid-cols-7 gap-2 mb-4">
+      <CardContent className="p-2 sm:p-6">
+        <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-2 sm:mb-4">
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(day => (
-            <div key={day} className="p-2 text-center font-semibold text-muted-foreground">
-              {day}
+            <div key={day} className="p-1 sm:p-2 text-center font-semibold text-muted-foreground text-xs sm:text-sm">
+              <span className="hidden sm:inline">{day}</span>
+              <span className="sm:hidden">{day.charAt(0)}</span>
             </div>
           ))}
         </div>
         
-        <div className="grid grid-cols-7 gap-2">
+        <div className="grid grid-cols-7 gap-1 sm:gap-2">
           {monthDays.map((date, index) => {
             const dayDeadlines = getDeadlinesForDay(date);
             const hasDeadlines = dayDeadlines.length > 0;
@@ -82,35 +83,36 @@ export const CalendarView = ({ deadlines }: CalendarViewProps) => {
               <div
                 key={index}
                 className={cn(
-                  "min-h-[100px] p-2 border rounded-lg transition-colors",
+                  "min-h-[60px] sm:min-h-[100px] p-1 sm:p-2 border rounded-lg transition-colors",
                   isToday(date) && "bg-blue-50 border-blue-200",
                   hasDeadlines && "bg-accent/30"
                 )}
               >
                 <div className={cn(
-                  "text-sm font-medium mb-1",
+                  "text-xs sm:text-sm font-medium mb-1",
                   isToday(date) && "text-blue-600"
                 )}>
                   {format(date, "d")}
                 </div>
                 
-                <div className="space-y-1">
-                  {dayDeadlines.slice(0, 3).map(deadline => (
+                <div className="space-y-0.5 sm:space-y-1">
+                  {dayDeadlines.slice(0, 2).map(deadline => (
                     <div
                       key={deadline.id}
                       className={cn(
-                        "text-xs p-1 rounded text-white truncate",
+                        "text-[10px] sm:text-xs p-0.5 sm:p-1 rounded text-white truncate",
                         getPriorityColor(deadline.priority),
                         deadline.completed && "opacity-60 line-through"
                       )}
                       title={`${deadline.title} - ${deadline.subject}`}
                     >
-                      {deadline.title}
+                      <span className="hidden sm:inline">{deadline.title}</span>
+                      <span className="sm:hidden">{deadline.title.slice(0, 8)}...</span>
                     </div>
                   ))}
-                  {dayDeadlines.length > 3 && (
-                    <div className="text-xs text-muted-foreground text-center">
-                      +{dayDeadlines.length - 3} more
+                  {dayDeadlines.length > 2 && (
+                    <div className="text-[10px] sm:text-xs text-muted-foreground text-center">
+                      +{dayDeadlines.length - 2}
                     </div>
                   )}
                 </div>
@@ -119,18 +121,18 @@ export const CalendarView = ({ deadlines }: CalendarViewProps) => {
           })}
         </div>
         
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="mt-4 sm:mt-6 flex flex-wrap gap-2 justify-center sm:justify-start">
           <div className="flex items-center space-x-1">
-            <div className="w-3 h-3 bg-red-500 rounded"></div>
-            <span className="text-sm">High Priority</span>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded"></div>
+            <span className="text-xs sm:text-sm">High Priority</span>
           </div>
           <div className="flex items-center space-x-1">
-            <div className="w-3 h-3 bg-yellow-500 rounded"></div>
-            <span className="text-sm">Medium Priority</span>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded"></div>
+            <span className="text-xs sm:text-sm">Medium Priority</span>
           </div>
           <div className="flex items-center space-x-1">
-            <div className="w-3 h-3 bg-green-500 rounded"></div>
-            <span className="text-sm">Low Priority</span>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded"></div>
+            <span className="text-xs sm:text-sm">Low Priority</span>
           </div>
         </div>
       </CardContent>
