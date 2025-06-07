@@ -24,7 +24,7 @@ The chosen color scheme is vibrant yet professional, utilizing blues and greens 
 
 ## Project Information
 
-**URL**: [https://lovable.dev/projects/d77da90c-7896-4b6c-a9f9-0ca90008789](https://www.google.com/search?q=https://lovable.dev/projects/d77da90c-7896-4b6c-a9f9-0ca90008789)
+**URL**: (https://deadline-daze-tracker.lovable.app/))
 
 ## How to Edit This Code
 
@@ -71,13 +71,3 @@ This project is built with:
   * React
   * shadcn-ui
   * Tailwind CSS
-
-## How to Deploy This Project
-
-Simply open [Lovable](https://www.google.com/search?q=https://lovable.dev/projects/d77da90c-7896-4b6c-a9f9-0ca90008789) and click on Share -\> Publish.
-
-## Connecting a Custom Domain to This Lovable Project
-
-Yes, it's possible\! To connect a domain, navigate to Project \> Settings \> Domains and click "Connect Domain."
-
-You can read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
