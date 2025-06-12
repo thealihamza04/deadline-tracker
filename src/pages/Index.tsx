@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { DeadlineForm } from "@/components/DeadlineForm";
@@ -21,7 +22,7 @@ export interface Deadline {
   id: string;
   title: string;
   subject: string;
-  type: "assignment" | "quiz";
+  type: "assignment" | "quiz" | "mid" | "final" | "presentation";
   dueDate: Date;
   priority: "high" | "medium" | "low";
   completed: boolean;

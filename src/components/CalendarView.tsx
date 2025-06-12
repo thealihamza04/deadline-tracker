@@ -95,14 +95,14 @@ export const CalendarView = ({ deadlines }: CalendarViewProps) => {
   };
 
   // Get badge variant for priority in the detail modal
-  const getBadgeVariant = (priority: string) => {
+  const getPriorityBadgeVariant = (priority: string) => {
     switch (priority) {
       case "high":
         return "destructive";
       case "medium":
-        return "secondary"; // Assuming 'warning' variant exists, otherwise use 'secondary'
+        return "secondary";
       case "low":
-        return "success";
+        return "secondary";
       default:
         return "secondary";
     }
@@ -326,7 +326,7 @@ export const CalendarView = ({ deadlines }: CalendarViewProps) => {
                   </p>
                   <p className='text-sm text-muted-foreground'>
                     Priority:{" "}
-                    <Badge variant={getBadgeVariant(deadline.priority)}>
+                    <Badge variant={getPriorityBadgeVariant(deadline.priority)}>
                       {deadline.priority}
                     </Badge>
                   </p>
