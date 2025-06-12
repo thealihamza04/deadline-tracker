@@ -2,7 +2,7 @@
 import type { Deadline } from "@/pages/Index";
 
 export interface DeadlineFormProps {
-  onSubmit: (deadline: Omit<Deadline, "id" | "completed">) => void;
+  onSubmit: (deadline: Omit<Deadline, "id" | "completed" | "userId">) => void;
   initialData?: Partial<Deadline>;
 }
 
