@@ -29,9 +29,9 @@ interface DeadlineFormProps {
 export const DeadlineForm = ({ onSubmit, initialData }: DeadlineFormProps) => {
   const [title, setTitle] = useState(initialData?.title || "");
   const [subject, setSubject] = useState(initialData?.subject || "");
-  const [type, setType] = useState<"assignment" | "quiz">(
-    initialData?.type || "assignment"
-  );
+  const [type, setType] = useState<
+    "assignment" | "quiz" | "mid" | "final" | "presentation"
+  >(initialData?.type || "assignment");
   const [dueDate, setDueDate] = useState<Date | undefined>(
     initialData?.dueDate
   );
@@ -133,15 +133,19 @@ export const DeadlineForm = ({ onSubmit, initialData }: DeadlineFormProps) => {
           <Label>Type *</Label>
           <Select
             value={type}
-            onValueChange={(value: "assignment" | "quiz") => setType(value)}
+            onValueChange={(
+              value: "assignment" | "quiz" | "mid" | "final" | "presentation"
+            ) => setType(value)}
           >
             <SelectTrigger>
               <SelectValue placeholder='Select type' />{" "}
-              {/* Added placeholder */}
             </SelectTrigger>
             <SelectContent>
               <SelectItem value='assignment'>Assignment</SelectItem>
               <SelectItem value='quiz'>Quiz</SelectItem>
+              <SelectItem value='mid'>Midterm</SelectItem>
+              <SelectItem value='final'>Final</SelectItem>
+              <SelectItem value='presentation'>Presentation</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -186,7 +190,6 @@ export const DeadlineForm = ({ onSubmit, initialData }: DeadlineFormProps) => {
           >
             <SelectTrigger>
               <SelectValue placeholder='Select priority' />{" "}
-              {/* Added placeholder */}
             </SelectTrigger>
             <SelectContent>
               <SelectItem value='high'>High</SelectItem>

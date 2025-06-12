@@ -24,9 +24,9 @@ export const DeadlineList = ({
   onDelete,
 }: DeadlineListProps) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState<"all" | "assignment" | "quiz">(
-    "all"
-  );
+  const [filterType, setFilterType] = useState<
+    "all" | "assignment" | "quiz" | "mid" | "final" | "presentation"
+  >("all");
   const [filterStatus, setFilterStatus] = useState<
     "all" | "pending" | "completed"
   >("pending");
@@ -68,7 +68,6 @@ export const DeadlineList = ({
 
   return (
     <div className='space-y-6'>
-      {/* Stats */}
       <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
         <div className='bg-white p-4 rounded-lg border shadow-sm'>
           <div className='text-2xl font-bold text-blue-600'>{stats.total}</div>
@@ -92,50 +91,45 @@ export const DeadlineList = ({
         </div>
       </div>
 
-      {/* Filters */}
       <div className='bg-white p-4 rounded-lg border shadow-sm'>
         <div className='flex flex-col md:flex-row gap-4'>
-          {/* Search Input */}
           <div className='flex-1 relative'>
             <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4' />
             <Input
               placeholder='Search deadlines...'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className='pl-10 w-full' // Ensure search input takes full width
+              className='pl-10 w-full'
             />
           </div>
 
-          {/* Filter and Sort Selects - NEW RESPONSIVE CLASSES */}
-          {/*
-      - grid grid-cols-1: Stacks items vertically on small screens (mobile-first)
-      - sm:grid-cols-2: Arranges into 2 columns on small-medium screens (tablets)
-      - lg:grid-cols-3: Arranges into 3 columns on large screens (desktops)
-      - gap-2: Provides consistent spacing between the select components
-      - flex-grow md:flex-none: Ensures the section grows on smaller screens, then
-        behaves normally on md and up within the flex row.
-    */}
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-grow md:flex-none'>
-            {/* Type Filter */}
             <Select
               value={filterType}
-              onValueChange={(value: "all" | "assignment" | "quiz") =>
-                setFilterType(value)
-              }
+              onValueChange={(
+                value:
+                  | "all"
+                  | "assignment"
+                  | "quiz"
+                  | "mid"
+                  | "final"
+                  | "presentation"
+              ) => setFilterType(value)}
             >
               <SelectTrigger className='w-full'>
                 {" "}
-                {/* Make it full width of its grid column */}
                 <SelectValue placeholder='All Types' />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value='all'>All Types</SelectItem>
                 <SelectItem value='assignment'>Assignment</SelectItem>
                 <SelectItem value='quiz'>Quiz</SelectItem>
+                <SelectItem value='mid'>Midterm</SelectItem>
+                <SelectItem value='final'>Final</SelectItem>
+                <SelectItem value='presentation'>Presentation</SelectItem>
               </SelectContent>
             </Select>
 
-            {/* Status Filter */}
             <Select
               value={filterStatus}
               onValueChange={(value: "all" | "pending" | "completed") =>
@@ -144,7 +138,6 @@ export const DeadlineList = ({
             >
               <SelectTrigger className='w-full'>
                 {" "}
-                {/* Make it full width of its grid column */}
                 <SelectValue placeholder='All Status' />
               </SelectTrigger>
               <SelectContent>
@@ -154,7 +147,6 @@ export const DeadlineList = ({
               </SelectContent>
             </Select>
 
-            {/* Sort By */}
             <Select
               value={sortBy}
               onValueChange={(value: "dueDate" | "priority" | "title") =>
@@ -163,7 +155,6 @@ export const DeadlineList = ({
             >
               <SelectTrigger className='w-full'>
                 {" "}
-                {/* Make it full width of its grid column */}
                 <SelectValue placeholder='Sort By' />
               </SelectTrigger>
               <SelectContent>
@@ -176,7 +167,6 @@ export const DeadlineList = ({
         </div>
       </div>
 
-      {/* Deadline Cards */}
       <div className='grid gap-4'>
         {filteredAndSortedDeadlines.length === 0 ? (
           <div className='text-center py-12 bg-white rounded-lg border'>
