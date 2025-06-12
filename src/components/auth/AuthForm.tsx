@@ -1,19 +1,18 @@
-
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/use-toast';
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 export const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const { login, register } = useAuth();
   const { toast } = useToast();
 
@@ -31,21 +30,23 @@ export const AuthForm = () => {
 
       if (result.success) {
         toast({
-          title: isLogin ? 'Welcome back!' : 'Account created!',
-          description: isLogin ? 'You have been logged in successfully.' : 'Your account has been created successfully.',
+          title: isLogin ? "Welcome back!" : "Account created!",
+          description: isLogin
+            ? "You have been logged in successfully."
+            : "Your account has been created successfully.",
         });
       } else {
         toast({
-          title: 'Error',
+          title: "Error",
           description: result.error,
-          variant: 'destructive',
+          variant: "destructive",
         });
       }
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'An unexpected error occurred.',
-        variant: 'destructive',
+        title: "Error",
+        description: "An unexpected error occurred.",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -53,66 +54,73 @@ export const AuthForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">
-            {isLogin ? 'Welcome Back' : 'Create Account'}
+    <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50 p-4'>
+      <Card className='w-full max-w-md'>
+        <CardHeader className='text-center'>
+          <CardTitle className='text-2xl font-bold'>
+            {isLogin ? "Welcome Back" : "Create Account"}
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className='space-y-4'>
             {!isLogin && (
-              <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+              <div className='space-y-2'>
+                <Label htmlFor='name'>Full Name</Label>
                 <Input
-                  id="name"
-                  type="text"
+                  id='name'
+                  type='text'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter your full name"
+                  placeholder='Enter your full name'
                   required={!isLogin}
                 />
               </div>
             )}
-            
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+
+            <div className='space-y-2'>
+              <Label htmlFor='email'>Email</Label>
               <Input
-                id="email"
-                type="email"
+                id='email'
+                type='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder='Enter your email'
                 required
               />
             </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+
+            <div className='space-y-2'>
+              <Label htmlFor='password'>Password</Label>
               <Input
-                id="password"
-                type="password"
+                id='password'
+                type='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder='Enter your password'
                 required
                 minLength={6}
+                autoComplete='current-password'
               />
             </div>
-            
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Create Account')}
+
+            <Button type='submit' className='w-full' disabled={loading}>
+              {loading
+                ? "Please wait..."
+                : isLogin
+                ? "Sign In"
+                : "Create Account"}
             </Button>
           </form>
-          
-          <div className="mt-4 text-center">
+
+          <div className='mt-4 text-center'>
             <Button
-              variant="ghost"
+              variant='ghost'
               onClick={() => setIsLogin(!isLogin)}
-              className="text-sm"
+              className='text-sm'
             >
-              {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
+              {isLogin
+                ? "Don't have an account? Sign up"
+                : "Already have an account? Sign in"}
             </Button>
           </div>
         </CardContent>
