@@ -77,7 +77,6 @@ export const DeadlineForm = ({ onSubmit, initialData }: DeadlineFormProps) => {
       dueDate,
       priority,
       description,
-      completed: initialData?.completed || false, // Preserve completed state if editing, otherwise false
     });
 
     // Reset form fields only if it's a new entry (not editing an existing one)
