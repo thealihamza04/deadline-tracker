@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { DeadlineCard } from "./DeadlineCard";
 import { Input } from "@/components/ui/input";
@@ -16,12 +17,14 @@ interface DeadlineListProps {
   deadlines: Deadline[];
   onUpdate: (id: string, updates: Partial<Deadline>) => void;
   onDelete: (id: string) => void;
+  onEdit: (deadline: Deadline) => void;
 }
 
 export const DeadlineList = ({
   deadlines,
   onUpdate,
   onDelete,
+  onEdit,
 }: DeadlineListProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<
@@ -186,6 +189,7 @@ export const DeadlineList = ({
               deadline={deadline}
               onUpdate={onUpdate}
               onDelete={onDelete}
+              onEdit={onEdit}
             />
           ))
         )}
