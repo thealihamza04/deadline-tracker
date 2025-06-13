@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { DeadlineForm } from "@/components/DeadlineForm";
@@ -6,9 +5,10 @@ import { DeadlineList } from "@/components/DeadlineList";
 import { CalendarView } from "@/components/CalendarView";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { FeedbackForm } from "@/components/FeedbackForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, MessageSquare } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   doc,
@@ -38,6 +38,7 @@ export interface Deadline {
 const Index = () => {
   const [deadlines, setDeadlines] = useState<Deadline[]>([]);
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState<boolean>(false);
   const [editingDeadline, setEditingDeadline] = useState<Deadline | null>(null);
   
   const { user, loading } = useAuth();
@@ -144,8 +145,25 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
+            <Dialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="shadow-lg hover:shadow-xl transition-shadow"
+                >
+                  <MessageSquare className="mr-2 h-5 w-5" />
+                  Feedback
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-lg">
+                <FeedbackForm onClose={() => setIsFeedbackOpen(false)} />
+              </DialogContent>
+            </Dialog>
+            
             <UserMenu />
+            
             <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
               <DialogTrigger asChild>
                 <Button
