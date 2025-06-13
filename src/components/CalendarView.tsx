@@ -322,7 +322,15 @@ export const CalendarView = ({ deadlines }: CalendarViewProps) => {
                   </h3>
                   <p className='text-sm text-muted-foreground'>
                     {deadline.subject} •{" "}
-                    {deadline.type === "assignment" ? "Assignment" : "Quiz"}
+                    {deadline.type === "quiz"
+                      ? "quiz"
+                      : deadline.type === "assignment"
+                      ? "assignment"
+                      : deadline.type === "mid"
+                      ? "mid"
+                      : deadline.type === "presentation"
+                      ? "presentation"
+                      : "final"}
                   </p>
                   <p className='text-sm text-muted-foreground'>
                     Priority:{" "}

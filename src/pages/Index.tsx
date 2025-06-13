@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { DeadlineForm } from "@/components/DeadlineForm";
@@ -41,15 +40,18 @@ const Index = () => {
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState<boolean>(false);
   const [editingDeadline, setEditingDeadline] = useState<Deadline | null>(null);
-  
+
   const { user, loading } = useAuth();
 
   useEffect(() => {
     const fetchDeadlines = async () => {
       if (!user) return;
-      
+
       try {
-        const q = query(collection(db, "deadlines"), where("userId", "==", user.uid));
+        const q = query(
+          collection(db, "deadlines"),
+          where("userId", "==", user.uid)
+        );
         const querySnapshot = await getDocs(q);
         const fetched: Deadline[] = querySnapshot.docs.map((doc) => {
           const data = doc.data();
@@ -71,8 +73,8 @@ const Index = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50">
-        <div className="text-lg">Loading...</div>
+      <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50'>
+        <div className='text-lg'>Loading...</div>
       </div>
     );
   }
@@ -120,7 +122,9 @@ const Index = () => {
     setIsFormOpen(true);
   };
 
-  const handleSaveDeadline = (formData: Omit<Deadline, "id" | "completed" | "userId">) => {
+  const handleSaveDeadline = (
+    formData: Omit<Deadline, "id" | "completed" | "userId">
+  ) => {
     if (editingDeadline) {
       updateDeadline(editingDeadline.id, {
         ...formData,
@@ -146,12 +150,12 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
+          <div className='flex  flex-row-reverse gap-3 sm:gap-2'>
             <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
               <DialogTrigger asChild>
                 <Button
                   size='lg'
-                  className='shadow-lg hover:shadow-xl transition-shadow bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:flex-1'
+                  className='shadow-lg hover:shadow-xl transition-shadow bg-primary text-primary-foreground hover:bg-primary/90 '
                   onClick={handleOpenAddForm}
                 >
                   <Plus className='mr-2 h-5 w-5' />
@@ -166,7 +170,7 @@ const Index = () => {
               </DialogContent>
             </Dialog>
 
-            <div className="w-full sm:w-auto flex justify-center sm:justify-end">
+            <div className=' sm:w-auto flex  sm:justify-end'>
               <UserMenu />
             </div>
           </div>
@@ -204,19 +208,19 @@ const Index = () => {
       </main>
 
       {/* Fixed Feedback Button at Bottom */}
-      <div className="fixed bottom-4 right-4 z-50">
+      <div className='fixed bottom-4 right-4 z-50'>
         <Dialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
           <DialogTrigger asChild>
             <Button
-              variant="outline"
-              size="lg"
-              className="shadow-lg hover:shadow-xl transition-shadow rounded-full"
+              variant='outline'
+              size='lg'
+              className='shadow-lg hover:shadow-xl transition-shadow rounded-full'
             >
-              <MessageSquare className="mr-2 h-5 w-5" />
+              <MessageSquare className='mr-2 h-5 w-5' />
               Feedback
             </Button>
           </DialogTrigger>
-          <DialogContent className="w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-lg">
+          <DialogContent className='w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-lg'>
             <FeedbackForm onClose={() => setIsFeedbackOpen(false)} />
           </DialogContent>
         </Dialog>

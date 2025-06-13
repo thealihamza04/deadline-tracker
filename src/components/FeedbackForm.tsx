@@ -77,7 +77,7 @@ export const FeedbackForm = ({ onClose }: FeedbackFormProps) => {
   };
 
   return (
-    <Card className='w-full'>
+    <Card className='w-full shadow-none border-none'>
       <CardHeader>
         <CardTitle>Send Feedback</CardTitle>
       </CardHeader>
@@ -103,6 +103,7 @@ export const FeedbackForm = ({ onClose }: FeedbackFormProps) => {
               placeholder='Tell us more about your experience...'
               rows={5}
               required
+              className='resize-none'
             />
           </div>
 
