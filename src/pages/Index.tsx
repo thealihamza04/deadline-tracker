@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { DeadlineForm } from "@/components/DeadlineForm";
@@ -135,8 +136,8 @@ const Index = () => {
   return (
     <div className='min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50'>
       <main className='container mx-auto px-4 py-8'>
-        <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8 gap-4'>
-          <div className='text-center sm:text-left'>
+        <div className='flex flex-col space-y-4 mb-8'>
+          <div className='text-center'>
             <h1 className='text-3xl sm:text-4xl font-bold text-foreground mb-2'>
               Deadline Tracker
             </h1>
@@ -145,13 +146,13 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
             <Dialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
               <DialogTrigger asChild>
                 <Button
                   variant="outline"
                   size="lg"
-                  className="shadow-lg hover:shadow-xl transition-shadow"
+                  className="shadow-lg hover:shadow-xl transition-shadow w-full sm:w-auto"
                 >
                   <MessageSquare className="mr-2 h-5 w-5" />
                   Feedback
@@ -162,13 +163,11 @@ const Index = () => {
               </DialogContent>
             </Dialog>
             
-            <UserMenu />
-            
             <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
               <DialogTrigger asChild>
                 <Button
                   size='lg'
-                  className='shadow-lg hover:shadow-xl transition-shadow bg-primary text-primary-foreground hover:bg-primary/90 w-full max-w-xs sm:w-auto mx-auto sm:mx-0'
+                  className='shadow-lg hover:shadow-xl transition-shadow bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:flex-1'
                   onClick={handleOpenAddForm}
                 >
                   <Plus className='mr-2 h-5 w-5' />
@@ -182,6 +181,10 @@ const Index = () => {
                 />
               </DialogContent>
             </Dialog>
+
+            <div className="w-full sm:w-auto flex justify-center sm:justify-end">
+              <UserMenu />
+            </div>
           </div>
         </div>
 
