@@ -134,8 +134,8 @@ const Index = () => {
   };
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50'>
-      <main className='container mx-auto px-4 py-8'>
+    <div className='min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 relative'>
+      <main className='container mx-auto px-4 py-8 pb-20'>
         <div className='flex flex-col space-y-4 mb-8'>
           <div className='text-center'>
             <h1 className='text-3xl sm:text-4xl font-bold text-foreground mb-2'>
@@ -147,22 +147,6 @@ const Index = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
-            <Dialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
-              <DialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="shadow-lg hover:shadow-xl transition-shadow w-full sm:w-auto"
-                >
-                  <MessageSquare className="mr-2 h-5 w-5" />
-                  Feedback
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-lg">
-                <FeedbackForm onClose={() => setIsFeedbackOpen(false)} />
-              </DialogContent>
-            </Dialog>
-            
             <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
               <DialogTrigger asChild>
                 <Button
@@ -218,6 +202,25 @@ const Index = () => {
           </TabsContent>
         </Tabs>
       </main>
+
+      {/* Fixed Feedback Button at Bottom */}
+      <div className="fixed bottom-4 right-4 z-50">
+        <Dialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
+          <DialogTrigger asChild>
+            <Button
+              variant="outline"
+              size="lg"
+              className="shadow-lg hover:shadow-xl transition-shadow rounded-full"
+            >
+              <MessageSquare className="mr-2 h-5 w-5" />
+              Feedback
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-lg">
+            <FeedbackForm onClose={() => setIsFeedbackOpen(false)} />
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 };
