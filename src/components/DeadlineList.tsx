@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { DeadlineCard } from "./DeadlineCard";
 import { Input } from "@/components/ui/input";
@@ -10,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Search, Filter } from "lucide-react";
+import { Search, Filter, FileText, Clock, CheckCircle, AlertTriangle } from "lucide-react";
 import type { Deadline } from "@/pages/Index";
 
 interface DeadlineListProps {
@@ -73,24 +72,52 @@ export const DeadlineList = ({
     <div className='space-y-6'>
       <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
         <div className='bg-white p-4 rounded-lg border shadow-sm'>
-          <div className='text-2xl font-bold text-blue-600'>{stats.total}</div>
-          <div className='text-sm text-muted-foreground'>Total</div>
-        </div>
-        <div className='bg-white p-4 rounded-lg border shadow-sm'>
-          <div className='text-2xl font-bold text-orange-600'>
-            {stats.pending}
+          <div className='flex items-center gap-3'>
+            <div className='p-2 bg-blue-100 rounded-lg'>
+              <FileText className='h-5 w-5 text-blue-600' />
+            </div>
+            <div>
+              <div className='text-2xl font-bold text-blue-600'>{stats.total}</div>
+              <div className='text-sm text-muted-foreground'>Total</div>
+            </div>
           </div>
-          <div className='text-sm text-muted-foreground'>Pending</div>
         </div>
         <div className='bg-white p-4 rounded-lg border shadow-sm'>
-          <div className='text-2xl font-bold text-green-600'>
-            {stats.completed}
+          <div className='flex items-center gap-3'>
+            <div className='p-2 bg-orange-100 rounded-lg'>
+              <Clock className='h-5 w-5 text-orange-600' />
+            </div>
+            <div>
+              <div className='text-2xl font-bold text-orange-600'>
+                {stats.pending}
+              </div>
+              <div className='text-sm text-muted-foreground'>Pending</div>
+            </div>
           </div>
-          <div className='text-sm text-muted-foreground'>Completed</div>
         </div>
         <div className='bg-white p-4 rounded-lg border shadow-sm'>
-          <div className='text-2xl font-bold text-red-600'>{stats.overdue}</div>
-          <div className='text-sm text-muted-foreground'>Overdue</div>
+          <div className='flex items-center gap-3'>
+            <div className='p-2 bg-green-100 rounded-lg'>
+              <CheckCircle className='h-5 w-5 text-green-600' />
+            </div>
+            <div>
+              <div className='text-2xl font-bold text-green-600'>
+                {stats.completed}
+              </div>
+              <div className='text-sm text-muted-foreground'>Completed</div>
+            </div>
+          </div>
+        </div>
+        <div className='bg-white p-4 rounded-lg border shadow-sm'>
+          <div className='flex items-center gap-3'>
+            <div className='p-2 bg-red-100 rounded-lg'>
+              <AlertTriangle className='h-5 w-5 text-red-600' />
+            </div>
+            <div>
+              <div className='text-2xl font-bold text-red-600'>{stats.overdue}</div>
+              <div className='text-sm text-muted-foreground'>Overdue</div>
+            </div>
+          </div>
         </div>
       </div>
 
