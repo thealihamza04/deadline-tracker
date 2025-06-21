@@ -10,19 +10,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Plus, MessageSquare } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import {
-  doc,
-  setDoc,
-  deleteDoc,
-  updateDoc,
-  getDocs,
-  collection,
-  query,
-  where,
-} from "firebase/firestore";
+import { doc, setDoc, deleteDoc, updateDoc, getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../Firebase";
 import { useAuth } from "@/hooks/useAuth";
-
 export interface Deadline {
   id: string;
   title: string;
@@ -34,31 +24,27 @@ export interface Deadline {
   description?: string;
   userId: string;
 }
-
 const Index = () => {
   const [deadlines, setDeadlines] = useState<Deadline[]>([]);
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState<boolean>(false);
   const [editingDeadline, setEditingDeadline] = useState<Deadline | null>(null);
-
-  const { user, loading } = useAuth();
-
+  const {
+    user,
+    loading
+  } = useAuth();
   useEffect(() => {
     const fetchDeadlines = async () => {
       if (!user) return;
-
       try {
-        const q = query(
-          collection(db, "deadlines"),
-          where("userId", "==", user.uid)
-        );
+        const q = query(collection(db, "deadlines"), where("userId", "==", user.uid));
         const querySnapshot = await getDocs(q);
-        const fetched: Deadline[] = querySnapshot.docs.map((doc) => {
+        const fetched: Deadline[] = querySnapshot.docs.map(doc => {
           const data = doc.data();
           return {
             ...data,
             dueDate: data.dueDate.toDate(),
-            id: doc.id,
+            id: doc.id
           };
         }) as Deadline[];
         setDeadlines(fetched);
@@ -67,68 +53,50 @@ const Index = () => {
         console.error("Error loading deadlines:", error);
       }
     };
-
     fetchDeadlines();
   }, [user]);
-
   if (loading) {
-    return (
-      <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50'>
+    return <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50'>
         <div className='text-lg'>Loading...</div>
-      </div>
-    );
+      </div>;
   }
-
   if (!user) {
     return <AuthForm />;
   }
-
-  const addNewDeadline = async (
-    newDeadlineData: Omit<Deadline, "id" | "completed" | "userId">
-  ) => {
+  const addNewDeadline = async (newDeadlineData: Omit<Deadline, "id" | "completed" | "userId">) => {
     const deadline: Deadline = {
       ...newDeadlineData,
       id: Date.now().toString(),
       completed: false,
-      userId: user.uid,
+      userId: user.uid
     };
-
     await setDoc(doc(db, "deadlines", deadline.id), deadline);
-    setDeadlines((prevDeadlines) => [...prevDeadlines, deadline]);
+    setDeadlines(prevDeadlines => [...prevDeadlines, deadline]);
   };
-
   const updateDeadline = async (id: string, updates: Partial<Deadline>) => {
     await updateDoc(doc(db, "deadlines", id), updates);
-
-    setDeadlines((prevDeadlines) =>
-      prevDeadlines.map((deadline) =>
-        deadline.id === id ? { ...deadline, ...updates } : deadline
-      )
-    );
+    setDeadlines(prevDeadlines => prevDeadlines.map(deadline => deadline.id === id ? {
+      ...deadline,
+      ...updates
+    } : deadline));
   };
-
   const deleteDeadline = async (id: string) => {
     await deleteDoc(doc(db, "deadlines", id));
-    setDeadlines((prev) => prev.filter((d) => d.id !== id));
+    setDeadlines(prev => prev.filter(d => d.id !== id));
   };
-
   const handleOpenAddForm = () => {
     setEditingDeadline(null);
     setIsFormOpen(true);
   };
-
   const handleOpenEditForm = (deadlineToEdit: Deadline) => {
     setEditingDeadline(deadlineToEdit);
     setIsFormOpen(true);
   };
-
-  const handleSaveDeadline = (
-    formData: Omit<Deadline, "id" | "completed" | "userId">
-  ) => {
+  const handleSaveDeadline = (formData: Omit<Deadline, "id" | "completed" | "userId">) => {
     if (editingDeadline) {
       updateDeadline(editingDeadline.id, {
         ...formData,
-        completed: editingDeadline.completed,
+        completed: editingDeadline.completed
       });
     } else {
       addNewDeadline(formData);
@@ -136,37 +104,21 @@ const Index = () => {
     setEditingDeadline(null);
     setIsFormOpen(false);
   };
-
-  return (
-    <div className='min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 relative'>
+  return <div className='min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 relative'>
       <main className='container mx-auto px-4 py-8 pb-20'>
         <div className='flex flex-col space-y-4 mb-8'>
-          <div className='text-center'>
-            <h1 className='text-3xl sm:text-4xl font-bold text-foreground mb-2'>
-              Deadline Tracker
-            </h1>
-            <p className='text-base sm:text-lg text-muted-foreground'>
-              Stay on top of your assignments and quizzes
-            </p>
-          </div>
+          
 
           <div className='flex  flex-row-reverse gap-3 sm:gap-2'>
             <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
               <DialogTrigger asChild>
-                <Button
-                  size='lg'
-                  className='shadow-lg hover:shadow-xl transition-shadow bg-primary text-primary-foreground hover:bg-primary/90 '
-                  onClick={handleOpenAddForm}
-                >
+                <Button size='lg' className='shadow-lg hover:shadow-xl transition-shadow bg-primary text-primary-foreground hover:bg-primary/90 ' onClick={handleOpenAddForm}>
                   <Plus className='mr-2 h-5 w-5' />
                   Add Deadline
                 </Button>
               </DialogTrigger>
               <DialogContent className='w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-lg md:max-w-xl lg:max-w-2xl'>
-                <DeadlineForm
-                  onSubmit={handleSaveDeadline}
-                  initialData={editingDeadline || undefined}
-                />
+                <DeadlineForm onSubmit={handleSaveDeadline} initialData={editingDeadline || undefined} />
               </DialogContent>
             </Dialog>
 
@@ -178,27 +130,16 @@ const Index = () => {
 
         <Tabs defaultValue='list' className='w-full'>
           <TabsList className='grid w-full max-w-md grid-cols-2 mb-6 bg-muted'>
-            <TabsTrigger
-              value='list'
-              className='data-[state=active]:bg-background data-[state=active]:shadow-sm'
-            >
+            <TabsTrigger value='list' className='data-[state=active]:bg-background data-[state=active]:shadow-sm'>
               List View
             </TabsTrigger>
-            <TabsTrigger
-              value='calendar'
-              className='data-[state=active]:bg-background data-[state=active]:shadow-sm'
-            >
+            <TabsTrigger value='calendar' className='data-[state=active]:bg-background data-[state=active]:shadow-sm'>
               Calendar
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value='list'>
-            <DeadlineList
-              deadlines={deadlines}
-              onUpdate={updateDeadline}
-              onDelete={deleteDeadline}
-              onEdit={handleOpenEditForm}
-            />
+            <DeadlineList deadlines={deadlines} onUpdate={updateDeadline} onDelete={deleteDeadline} onEdit={handleOpenEditForm} />
           </TabsContent>
 
           <TabsContent value='calendar'>
@@ -211,11 +152,7 @@ const Index = () => {
       <div className='fixed bottom-4 right-4 z-50'>
         <Dialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
           <DialogTrigger asChild>
-            <Button
-              variant='outline'
-              size='lg'
-              className='shadow-lg hover:shadow-xl transition-shadow rounded-full'
-            >
+            <Button variant='outline' size='lg' className='shadow-lg hover:shadow-xl transition-shadow rounded-full'>
               <MessageSquare className='mr-2 h-5 w-5' />
               Feedback
             </Button>
@@ -225,8 +162,6 @@ const Index = () => {
           </DialogContent>
         </Dialog>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
